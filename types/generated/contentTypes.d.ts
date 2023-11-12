@@ -362,6 +362,50 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiAlbumAlbum extends Schema.CollectionType {
+  collectionName: 'albums';
+  info: {
+    singularName: 'album';
+    pluralName: 'albums';
+    displayName: 'Album';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
+    description: Attribute.Text;
+    visible: Attribute.Boolean & Attribute.DefaultTo<true>;
+    private: Attribute.Boolean & Attribute.DefaultTo<false>;
+    arts: Attribute.Relation<'api::album.album', 'oneToMany', 'api::art.art'>;
+    usersPermissionsUser: Attribute.Relation<
+      'api::album.album',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::album.album',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::album.album',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiArtArt extends Schema.CollectionType {
   collectionName: 'arts';
   info: {
@@ -375,15 +419,16 @@ export interface ApiArtArt extends Schema.CollectionType {
   };
   attributes: {
     photo: Attribute.Media;
-    user: Attribute.Relation<
-      'api::art.art',
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
     description: Attribute.Text &
       Attribute.SetMinMaxLength<{
         maxLength: 1000;
       }>;
+    album: Attribute.Relation<'api::art.art', 'manyToOne', 'api::album.album'>;
+    likes: Attribute.Relation<
+      'api::art.art',
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -691,10 +736,15 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
-    arts: Attribute.Relation<
+    likedArts: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'manyToMany',
+      'api::art.art'
+    >;
+    albums: Attribute.Relation<
       'plugin::users-permissions.user',
       'oneToMany',
-      'api::art.art'
+      'api::album.album'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -723,6 +773,7 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::album.album': ApiAlbumAlbum;
       'api::art.art': ApiArtArt;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;

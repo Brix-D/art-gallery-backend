@@ -65,11 +65,17 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "arts": {
+    "likedArts": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::art.art",
+      "inversedBy": "likes"
+    },
+    "albums": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::art.art",
-      "mappedBy": "user"
+      "target": "api::album.album",
+      "mappedBy": "usersPermissionsUser"
     }
   }
 }

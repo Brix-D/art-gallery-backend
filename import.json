@@ -1,33 +1,36 @@
 {
     "version": 2,
     "data": {
-        "api::art.art": {
+        "plugin::users-permissions.user": {
             "3": {
                 "id": 3,
-                "usersPermissionsUser": 1,
-                "photo": {
-                    "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBus_tgkwKQAlD_5Gi5PtIwpEJLHkpguun-w&usqp=CAU"
-                }
-            },
-            "4": {
-                "id": 4,
-                "usersPermissionsUser": 1
-            },
-            "5": {
-                "id": 5,
-                "usersPermissionsUser": 1,
+                "username": "Дмитрий Шляхта",
+                "email": "test@gmail.com",
+                "password": "Grossper123",
+                "confirmed": 1,
+                "blocked": 0,
+                "role": 2
+            }
+        },
+        "api::album.album": {
+            "1": {
+                "id": 1,
+                "usersPermissionsUser": 3,
+                "name": "Обои"
+            }
+        },
+        "api::art.art": {
+            "1": {
+                "id": 1,
+                "description": "World of warcraft",
+                "album": 1,
                 "photo": 1
-            },
-            "6": {
-                "id": 6,
-                "usersPermissionsUser": 1,
-                "photo": 2
             }
         },
         "plugin::upload.file": {
-            "2": {
-                "id": 2,
-                "url": "https://user-images.githubusercontent.com/505236/181904982-37d3ad4c-d430-4a21-911b-08e8b9e8fdf7.png"
+            "1": {
+                "id": 1,
+                "url": "http://192.168.0.105:5500/oboi-wow.jpg"
             }
         }
     }
